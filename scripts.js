@@ -1,3 +1,7 @@
+
+  let arr = [] ; 
+
+
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
 
@@ -23,6 +27,7 @@ function handleFileSelect(evt) {
                             '" title="', escape(theFile.name), '"/>'].join('');
           document.getElementById('list').insertBefore(span, null);
           diplayImage(id) ; 
+          arr.concat(id) ; 
           // console.log(document.getElementById(id)) ; 
         };
       })(f);
@@ -31,81 +36,58 @@ function handleFileSelect(evt) {
       reader.readAsDataURL(f);
     }
     
-
-  }
-
-
-
-  function diplayImage(id){
-      console.log(document.getElementById(id)) ; 
   }
 
   document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 
-  function allowDrop(ev) {
-    ev.preventDefault();
-  }
-  
-  function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-  }
-  
-  function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+
+  function diplayImage(id){
+      // console.log(document.getElementById(id)) ; 
+      // let currentDroppable = null;
   }
 
-  // class App {
+  console.log(arr) ; 
+  for (i = 0 ; i< arr.length;i++){
+      moveImg(arr[i]) ; 
+  }
 
-  //   static init() {
-  
-  //     App.box = document.getElementsByClassName('box')[0]
-  
-  //     App.box.addEventListener("dragstart", App.dragstart)
-  //     App.box.addEventListener("dragend", App.dragend)
-  
-  //     const containers = document.getElementsByClassName('holder')
-  
-  //     for(const container of containers) {
-  //       container.addEventListener("dragover", App.dragover)
-  //       container.addEventListener("dragenter", App.dragenter)
-  //       container.addEventListener("dragleave", App.dragleave)
-  //       container.addEventListener("drop", App.drop)
-  //     }
-  //   }
-  
-  //   static dragstart() {
-  //     this.className += " held"
+  function moveImg(id){
+    let ball = document.getElementById(id) ; 
+
+      ball.onmousedown = function(event) {
     
-  //     setTimeout(()=>this.className="invisible", 0)
-  //   }
-  
-  //   static dragend() {
-  //     this.className = "box"
-  //   }
-  
-  //   static dragover(e) {
-  //     e.preventDefault()
-  //   }
-  
-  //   static dragenter(e) {
-  //     e.preventDefault()
-  //     this.className += " hovered"
-  //   }
-  
-  //   static dragleave() {
-  //     this.className = "holder"
-  //   }
-  
-  //   static drop() {
-  //     this.className = "holder"
-  //     this.append(App.box)
-  //   }
-  
-  // }
-  
-  // document.addEventListener("DOMContentLoaded", App.init)
-  
- 
+        let shiftX = event.clientX - ball.getBoundingClientRect().left;
+        let shiftY = event.clientY - ball.getBoundingClientRect().top;
+    
+        ball.style.position = 'absolute';
+        ball.style.zIndex = 1000;
+        document.body.append(ball);
+    
+        moveAt(event.pageX, event.pageY);
+    
+        function moveAt(pageX, pageY) {
+          ball.style.left = pageX - shiftX + 'px';
+          ball.style.top = pageY - shiftY + 'px';
+        }
+    
+        function onMouseMove(event) {
+          moveAt(event.pageX, event.pageY);
+        }
+    
+        document.addEventListener('mousemove', onMouseMove);
+    
+        ball.onmouseup = function() {
+          document.removeEventListener('mousemove', onMouseMove);
+          ball.onmouseup = null;
+        };
+    
+      };
+
+      ball.ondragstart = function() {
+        return false;
+      };
+  }
+
+
+
