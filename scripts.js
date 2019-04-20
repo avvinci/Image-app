@@ -1,5 +1,4 @@
 
-let arr = [] ; 
 
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
@@ -26,9 +25,7 @@ function handleFileSelect(evt) {
                             '" title="', escape(theFile.name), '"/>'].join('');
           document.getElementById('list').insertBefore(span, null);
           diplayImage(id) ; 
-          // console.log(id) ;
           moveImg(id) ; 
-          // arr.push(id) ; 
           // console.log(document.getElementById(id)) ; 
         };
       })(f);
@@ -37,15 +34,6 @@ function handleFileSelect(evt) {
       reader.readAsDataURL(f);
     }
     
-    
-    // for (let i = 0 ; i< arr.length;i++){
-    //   let id = "myimg" + i ; 
-    //   console.log(id) ;
-
-    // }
-    // console.log(arr) ; 
-    
-    
   }
 
   document.getElementById('files').addEventListener('change', handleFileSelect, false);
@@ -53,15 +41,14 @@ function handleFileSelect(evt) {
 
 
   function diplayImage(id){
-      // console.log(document.getElementById(id)) ; 
-      // let currentDroppable = null;
+      console.log(document.getElementById(id)) ; 
   }
 
 
 
 
   function moveImg(id){
-    console.log(document.getElementById(id)) ; 
+    // console.log(document.getElementById(id)) ; 
     
     let ball = document.getElementById(id) ; 
 
